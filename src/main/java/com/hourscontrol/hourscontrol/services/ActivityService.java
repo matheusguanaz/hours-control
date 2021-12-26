@@ -1,5 +1,6 @@
 package com.hourscontrol.hourscontrol.services;
 
+import com.hourscontrol.hourscontrol.dtos.request.ActivityDTO;
 import com.hourscontrol.hourscontrol.dtos.request.EndActivityRequestDTO;
 import com.hourscontrol.hourscontrol.dtos.response.CreateMessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
@@ -31,7 +32,7 @@ public class ActivityService {
     }
 
     public MessageResponseDTO endActivity(Long id, EndActivityRequestDTO endActivityRequestDTO) throws ActivityNotFoundException {
-        Activity activity = activityRepository.findById(id).orElseThrow(() -> new ActivityNotFoundException(id));
+        Activity activity = verifyIfActivityExists(id);
         activity.setEndTime(new Timestamp(System.currentTimeMillis()));
         activity.setDescription(endActivityRequestDTO.getDescription());
         activityRepository.save(activity);
@@ -40,4 +41,28 @@ public class ActivityService {
                 .message("Atividade encerrada com sucesso")
                 .build();
     }
+
+    public MessageResponseDTO editActivity(Long id, ActivityDTO activityDTO) throws ActivityNotFoundException {
+        Activity activity = verifyIfActivityExists(id);
+        activity.setDescription(activityDTO.getDescription());
+        activity.setStartTime(formatTimestampFromString(activityDTO.getStartTime()));
+        activity.setEndTime(formatTimestampFromString(activityDTO.getEndTime()));
+        activityRepository.save(activity);
+
+        return MessageResponseDTO
+                .builder()
+                .message("Atividade alterada com sucesso")
+                .build();
+    }
+
+    private Activity verifyIfActivityExists(Long id) throws ActivityNotFoundException {
+        Activity activity = activityRepository.findById(id).orElseThrow(() -> new ActivityNotFoundException(id));
+        return activity;
+    }
+
+    private Timestamp formatTimestampFromString(String date){
+        return Timestamp.valueOf(date);
+    }
+
+
 }

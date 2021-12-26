@@ -1,5 +1,6 @@
 package com.hourscontrol.hourscontrol.controllers;
 
+import com.hourscontrol.hourscontrol.dtos.request.ActivityDTO;
 import com.hourscontrol.hourscontrol.dtos.request.EndActivityRequestDTO;
 import com.hourscontrol.hourscontrol.dtos.response.CreateMessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
@@ -28,5 +29,10 @@ public class ActivityController {
     @PatchMapping("/{id}")
     public MessageResponseDTO endActivity(@PathVariable Long id, @RequestBody EndActivityRequestDTO endActivityRequestDTO) throws ActivityNotFoundException {
         return activityService.endActivity(id, endActivityRequestDTO);
+    }
+
+    @PutMapping("/{id}")
+    public MessageResponseDTO editActivity(@PathVariable Long id, @RequestBody ActivityDTO activityDTO) throws ActivityNotFoundException {
+        return activityService.editActivity(id, activityDTO);
     }
 }
