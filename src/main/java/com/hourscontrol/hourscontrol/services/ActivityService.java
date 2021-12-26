@@ -55,6 +55,10 @@ public class ActivityService {
                 .build();
     }
 
+    public void deleteActivity(Long id) throws ActivityNotFoundException {
+        activityRepository.delete(verifyIfActivityExists(id));
+    }
+
     private Activity verifyIfActivityExists(Long id) throws ActivityNotFoundException {
         Activity activity = activityRepository.findById(id).orElseThrow(() -> new ActivityNotFoundException(id));
         return activity;

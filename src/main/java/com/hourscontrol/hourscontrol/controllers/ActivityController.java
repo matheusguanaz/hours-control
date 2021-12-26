@@ -35,4 +35,9 @@ public class ActivityController {
     public MessageResponseDTO editActivity(@PathVariable Long id, @RequestBody ActivityDTO activityDTO) throws ActivityNotFoundException {
         return activityService.editActivity(id, activityDTO);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteActivity(@PathVariable Long id) throws ActivityNotFoundException {
+        activityService.deleteActivity(id);
+    }
 }
