@@ -2,6 +2,7 @@ package com.hourscontrol.hourscontrol.controllers;
 
 import com.hourscontrol.hourscontrol.dtos.request.ActivityDTO;
 import com.hourscontrol.hourscontrol.dtos.request.EndActivityRequestDTO;
+import com.hourscontrol.hourscontrol.dtos.response.ActiviyyResponse;
 import com.hourscontrol.hourscontrol.dtos.response.CreateMessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.exceptions.ActivityNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController
@@ -19,6 +21,16 @@ import org.springframework.web.bind.annotation.*;
 public class ActivityController {
 
     private ActivityService activityService;
+
+    @GetMapping
+    public List<ActiviyyResponse> getAllActivities(){
+        return activityService.getAllActivities();
+    }
+
+    @GetMapping("/{id}")
+    public ActiviyyResponse getOne(@PathVariable Long id) throws ActivityNotFoundException {
+        return activityService.getOne(id);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -37,6 +49,7 @@ public class ActivityController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteActivity(@PathVariable Long id) throws ActivityNotFoundException {
         activityService.deleteActivity(id);
     }

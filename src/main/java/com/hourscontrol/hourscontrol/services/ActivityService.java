@@ -2,6 +2,7 @@ package com.hourscontrol.hourscontrol.services;
 
 import com.hourscontrol.hourscontrol.dtos.request.ActivityDTO;
 import com.hourscontrol.hourscontrol.dtos.request.EndActivityRequestDTO;
+import com.hourscontrol.hourscontrol.dtos.response.ActiviyyResponse;
 import com.hourscontrol.hourscontrol.dtos.response.CreateMessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.entities.Activity;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -42,6 +45,18 @@ public class ActivityService {
                 .build();
     }
 
+    public List<ActiviyyResponse> getAllActivities() {
+        List<ActiviyyResponse> activityResponseList = new ArrayList<>();
+        List<Activity> activities = activityRepository.findAll();
+
+        activities.forEach(activity -> activityResponseList.add(convertActivityToActivyResponse(activity)));
+        return activityResponseList;
+    }
+
+    public ActiviyyResponse getOne(Long id) throws ActivityNotFoundException {
+        return convertActivityToActivyResponse(verifyIfActivityExists(id));
+    }
+
     public MessageResponseDTO editActivity(Long id, ActivityDTO activityDTO) throws ActivityNotFoundException {
         Activity activity = verifyIfActivityExists(id);
         activity.setDescription(activityDTO.getDescription());
@@ -68,5 +83,14 @@ public class ActivityService {
         return Timestamp.valueOf(date);
     }
 
+    private ActiviyyResponse convertActivityToActivyResponse(Activity activity){
+        return ActiviyyResponse
+                .builder()
+                .activityId(activity.getActivityId())
+                .description(activity.getDescription())
+                .startTime(activity.getStartTime())
+                .endTime(activity.getEndTime())
+                .build();
+    }
 
 }
