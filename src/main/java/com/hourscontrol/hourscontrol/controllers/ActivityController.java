@@ -1,6 +1,7 @@
 package com.hourscontrol.hourscontrol.controllers;
 
 import com.hourscontrol.hourscontrol.dtos.request.ActivityDTO;
+import com.hourscontrol.hourscontrol.dtos.request.CreateActivityDTO;
 import com.hourscontrol.hourscontrol.dtos.request.EndActivityRequestDTO;
 import com.hourscontrol.hourscontrol.dtos.response.ActiviyyResponse;
 import com.hourscontrol.hourscontrol.dtos.response.CreateMessageResponseDTO;
@@ -34,8 +35,8 @@ public class ActivityController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateMessageResponseDTO createActivity(){
-        return activityService.createActivity();
+    public CreateMessageResponseDTO createActivity(@RequestBody CreateActivityDTO createActivityDTO){
+        return activityService.createActivity(createActivityDTO);
     }
 
     @PatchMapping("/{id}")

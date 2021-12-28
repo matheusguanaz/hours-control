@@ -1,11 +1,13 @@
 package com.hourscontrol.hourscontrol.services;
 
 import com.hourscontrol.hourscontrol.dtos.request.ActivityDTO;
+import com.hourscontrol.hourscontrol.dtos.request.CreateActivityDTO;
 import com.hourscontrol.hourscontrol.dtos.request.EndActivityRequestDTO;
 import com.hourscontrol.hourscontrol.dtos.response.ActiviyyResponse;
 import com.hourscontrol.hourscontrol.dtos.response.CreateMessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.entities.Activity;
+import com.hourscontrol.hourscontrol.entities.Task;
 import com.hourscontrol.hourscontrol.exceptions.ActivityNotFoundException;
 import com.hourscontrol.hourscontrol.repositories.ActivityRepository;
 import lombok.AllArgsConstructor;
@@ -22,9 +24,13 @@ public class ActivityService {
 
     private ActivityRepository activityRepository;
 
-    public CreateMessageResponseDTO createActivity(){
+    public CreateMessageResponseDTO createActivity(CreateActivityDTO createActivityDTO){
+        Task task = new Task();
+        task.setTaskId(createActivityDTO.getTaskId());
+
         Activity activity = new Activity();
         activity.setStartTime(new Timestamp(System.currentTimeMillis()));
+        activity.setTask(task);
         Activity savedActivity = activityRepository.save(activity);
 
         return CreateMessageResponseDTO

@@ -7,21 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ActivityDTO {
+public class CreateActivityDTO {
     @NotEmpty
-    private String description;
-
-    @NotEmpty
-    private String startTime;
-
-    @NotEmpty
-    private String endTime;
-
-    @NotEmpty
-    private  Long taskId;
+    private Long taskId;
 }
