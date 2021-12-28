@@ -1,5 +1,7 @@
 package com.hourscontrol.hourscontrol.dtos.request;
 
+import com.hourscontrol.hourscontrol.dtos.response.ActivityResponse;
+import com.hourscontrol.hourscontrol.entities.Activity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,4 +26,5 @@ public class ActivityDTO {
 
     @NotEmpty
     private  Long taskId;
+
 }

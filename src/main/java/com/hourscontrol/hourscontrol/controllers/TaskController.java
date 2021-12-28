@@ -2,6 +2,7 @@ package com.hourscontrol.hourscontrol.controllers;
 
 import com.hourscontrol.hourscontrol.dtos.request.TaskDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
+import com.hourscontrol.hourscontrol.dtos.response.TaskResponse;
 import com.hourscontrol.hourscontrol.entities.Task;
 import com.hourscontrol.hourscontrol.services.TaskService;
 import lombok.AllArgsConstructor;
@@ -22,4 +23,8 @@ public class TaskController {
         return taskService.createTask(taskDTO);
     }
 
+    @GetMapping
+    public List<TaskResponse> getAllTasks(){
+        return taskService.getAllTasks();
+    }
 }

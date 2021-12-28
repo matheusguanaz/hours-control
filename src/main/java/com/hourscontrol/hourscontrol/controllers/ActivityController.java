@@ -3,7 +3,7 @@ package com.hourscontrol.hourscontrol.controllers;
 import com.hourscontrol.hourscontrol.dtos.request.ActivityDTO;
 import com.hourscontrol.hourscontrol.dtos.request.CreateActivityDTO;
 import com.hourscontrol.hourscontrol.dtos.request.EndActivityRequestDTO;
-import com.hourscontrol.hourscontrol.dtos.response.ActiviyyResponse;
+import com.hourscontrol.hourscontrol.dtos.response.ActivityResponse;
 import com.hourscontrol.hourscontrol.dtos.response.CreateMessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.exceptions.ActivityNotFoundException;
@@ -24,12 +24,12 @@ public class ActivityController {
     private ActivityService activityService;
 
     @GetMapping
-    public List<ActiviyyResponse> getAllActivities(){
+    public List<ActivityResponse> getAllActivities(){
         return activityService.getAllActivities();
     }
 
     @GetMapping("/{id}")
-    public ActiviyyResponse getOne(@PathVariable Long id) throws ActivityNotFoundException {
+    public ActivityResponse getOne(@PathVariable Long id) throws ActivityNotFoundException {
         return activityService.getOne(id);
     }
 

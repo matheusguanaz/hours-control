@@ -1,14 +1,19 @@
 package com.hourscontrol.hourscontrol.services;
 
 import com.hourscontrol.hourscontrol.dtos.request.TaskDTO;
+import com.hourscontrol.hourscontrol.dtos.response.ActivityResponse;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
+import com.hourscontrol.hourscontrol.dtos.response.TaskResponse;
+import com.hourscontrol.hourscontrol.entities.Activity;
 import com.hourscontrol.hourscontrol.entities.Task;
 import com.hourscontrol.hourscontrol.repositories.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -28,5 +33,28 @@ public class TaskService {
                 .message("Tarefa criada com sucesso")
                 .build();
     }
+
+    public List<TaskResponse> getAllTasks() {
+        List<TaskResponse> tasksResponseList = new ArrayList<>();
+        List<Task> tasks = taskRepository.findAll();
+
+        tasks.forEach(task -> tasksResponseList.add(convertTaskToTaskResponse(task)));
+        return tasksResponseList;
+    }
+
+    private TaskResponse convertTaskToTaskResponse(Task task){
+        return TaskResponse
+                .builder()
+                .id(task.getTaskId())
+                .taskName(task.getTaskName())
+                .taskDescription(task.getTaskDescription())
+                .activities(
+                        task.getActivities()
+                        .stream()
+                        .map(ActivityResponse::convertActivityToActivityResponse)
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
 
 }

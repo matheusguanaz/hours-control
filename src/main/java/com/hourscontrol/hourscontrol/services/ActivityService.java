@@ -3,7 +3,7 @@ package com.hourscontrol.hourscontrol.services;
 import com.hourscontrol.hourscontrol.dtos.request.ActivityDTO;
 import com.hourscontrol.hourscontrol.dtos.request.CreateActivityDTO;
 import com.hourscontrol.hourscontrol.dtos.request.EndActivityRequestDTO;
-import com.hourscontrol.hourscontrol.dtos.response.ActiviyyResponse;
+import com.hourscontrol.hourscontrol.dtos.response.ActivityResponse;
 import com.hourscontrol.hourscontrol.dtos.response.CreateMessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.entities.Activity;
@@ -51,15 +51,15 @@ public class ActivityService {
                 .build();
     }
 
-    public List<ActiviyyResponse> getAllActivities() {
-        List<ActiviyyResponse> activityResponseList = new ArrayList<>();
+    public List<ActivityResponse> getAllActivities() {
+        List<ActivityResponse> activityResponseList = new ArrayList<>();
         List<Activity> activities = activityRepository.findAll();
 
         activities.forEach(activity -> activityResponseList.add(convertActivityToActivyResponse(activity)));
         return activityResponseList;
     }
 
-    public ActiviyyResponse getOne(Long id) throws ActivityNotFoundException {
+    public ActivityResponse getOne(Long id) throws ActivityNotFoundException {
         return convertActivityToActivyResponse(verifyIfActivityExists(id));
     }
 
@@ -81,16 +81,15 @@ public class ActivityService {
     }
 
     private Activity verifyIfActivityExists(Long id) throws ActivityNotFoundException {
-        Activity activity = activityRepository.findById(id).orElseThrow(() -> new ActivityNotFoundException(id));
-        return activity;
+        return activityRepository.findById(id).orElseThrow(() -> new ActivityNotFoundException(id));
     }
 
     private Timestamp formatTimestampFromString(String date){
         return Timestamp.valueOf(date);
     }
 
-    private ActiviyyResponse convertActivityToActivyResponse(Activity activity){
-        return ActiviyyResponse
+    private ActivityResponse convertActivityToActivyResponse(Activity activity){
+        return ActivityResponse
                 .builder()
                 .activityId(activity.getActivityId())
                 .description(activity.getDescription())
