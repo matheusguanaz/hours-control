@@ -4,7 +4,6 @@ import com.hourscontrol.hourscontrol.dtos.request.TaskDTO;
 import com.hourscontrol.hourscontrol.dtos.response.ActivityResponse;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.TaskResponse;
-import com.hourscontrol.hourscontrol.entities.Activity;
 import com.hourscontrol.hourscontrol.entities.Task;
 import com.hourscontrol.hourscontrol.exceptions.TaskNotFoundException;
 import com.hourscontrol.hourscontrol.repositories.TaskRepository;
@@ -60,6 +59,10 @@ public class TaskService {
                 .build();
     }
 
+    public void deleteTask(Long id) throws TaskNotFoundException {
+        taskRepository.delete(verifyIfTaskExists(id));
+    }
+
     private Task verifyIfTaskExists(Long id) throws TaskNotFoundException {
         return taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
     }
@@ -77,5 +80,4 @@ public class TaskService {
                         .collect(Collectors.toList()))
                 .build();
     }
-
 }

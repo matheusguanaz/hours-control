@@ -8,6 +8,7 @@ import com.hourscontrol.hourscontrol.exceptions.TaskNotFoundException;
 import com.hourscontrol.hourscontrol.services.TaskService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +38,11 @@ public class TaskController {
     @PutMapping("/{id}")
     public MessageResponseDTO updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) throws TaskNotFoundException {
         return taskService.editTask(id, taskDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTask(@PathVariable Long id) throws TaskNotFoundException {
+        taskService.deleteTask(id);
     }
 }
