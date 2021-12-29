@@ -29,6 +29,11 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
+    @GetMapping("/{id}")
+    public TaskResponse getOneTask(@PathVariable Long id) throws TaskNotFoundException {
+        return taskService.getOneTask(id);
+    }
+
     @PutMapping("/{id}")
     public MessageResponseDTO updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) throws TaskNotFoundException {
         return taskService.editTask(id, taskDTO);

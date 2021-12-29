@@ -43,8 +43,13 @@ public class TaskService {
         return tasksResponseList;
     }
 
+    public TaskResponse getOneTask(Long id) throws TaskNotFoundException {
+        Task task = verifyIfTaskExists(id);
+        return convertTaskToTaskResponse(task);
+    }
+
     public MessageResponseDTO editTask(Long id, TaskDTO taskDTO) throws TaskNotFoundException {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
+        Task task = verifyIfTaskExists(id);
         task.setTaskName(taskDTO.getTaskName());
         task.setTaskDescription(taskDTO.getTaskDescription());
         taskRepository.save(task);
@@ -53,6 +58,10 @@ public class TaskService {
                 .builder()
                 .message("Tarefa atualizada com sucesso")
                 .build();
+    }
+
+    private Task verifyIfTaskExists(Long id) throws TaskNotFoundException {
+        return taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     private TaskResponse convertTaskToTaskResponse(Task task){
