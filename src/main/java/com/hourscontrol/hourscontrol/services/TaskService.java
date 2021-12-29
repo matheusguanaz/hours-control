@@ -6,6 +6,7 @@ import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.TaskResponse;
 import com.hourscontrol.hourscontrol.entities.Activity;
 import com.hourscontrol.hourscontrol.entities.Task;
+import com.hourscontrol.hourscontrol.exceptions.TaskNotFoundException;
 import com.hourscontrol.hourscontrol.repositories.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,18 @@ public class TaskService {
         return tasksResponseList;
     }
 
+    public MessageResponseDTO editTask(Long id, TaskDTO taskDTO) throws TaskNotFoundException {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
+        task.setTaskName(taskDTO.getTaskName());
+        task.setTaskDescription(taskDTO.getTaskDescription());
+        taskRepository.save(task);
+
+        return MessageResponseDTO
+                .builder()
+                .message("Tarefa atualizada com sucesso")
+                .build();
+    }
+
     private TaskResponse convertTaskToTaskResponse(Task task){
         return TaskResponse
                 .builder()
@@ -55,6 +68,5 @@ public class TaskService {
                         .collect(Collectors.toList()))
                 .build();
     }
-
 
 }

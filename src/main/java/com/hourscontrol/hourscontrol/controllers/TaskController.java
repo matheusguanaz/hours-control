@@ -4,6 +4,7 @@ import com.hourscontrol.hourscontrol.dtos.request.TaskDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.TaskResponse;
 import com.hourscontrol.hourscontrol.entities.Task;
+import com.hourscontrol.hourscontrol.exceptions.TaskNotFoundException;
 import com.hourscontrol.hourscontrol.services.TaskService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,10 @@ public class TaskController {
     @GetMapping
     public List<TaskResponse> getAllTasks(){
         return taskService.getAllTasks();
+    }
+
+    @PutMapping("/{id}")
+    public MessageResponseDTO updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO) throws TaskNotFoundException {
+        return taskService.editTask(id, taskDTO);
     }
 }
