@@ -4,9 +4,11 @@ A API permite ao usuário criar uma tarefa, marcar o horário de início e o hor
 
 ###Execução local
 
-Para executar este projeto localmente é necessário ter o maven instalado, sendo assim.
+Para executar este projeto localmente é necessário ter o maven instalado e um banco de dados, sendo assim.
 
-Basta utilizar o comando ***mvn springboot:run*** na raiz do projeto.
+É necessário modificar o arquivo hours-control\src\main\resources\application.properties com a configuração do seu banco de dados.
+
+E então utilizar o comando ***mvn springboot:run*** na raiz do projeto.
 
 ###Rotas
 
