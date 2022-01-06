@@ -5,6 +5,9 @@ import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.ProjectResponse;
 import com.hourscontrol.hourscontrol.dtos.response.TaskResponse;
 import com.hourscontrol.hourscontrol.entities.Project;
+import com.hourscontrol.hourscontrol.entities.Task;
+import com.hourscontrol.hourscontrol.exceptions.ProjectNotFoundException;
+import com.hourscontrol.hourscontrol.exceptions.TaskNotFoundException;
 import com.hourscontrol.hourscontrol.repositories.ProjectRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +43,14 @@ public class ProjectService {
         projects.forEach(project -> projectResponseList.add(ProjectResponse.convertProjectToProjectResponse(project)));
 
         return projectResponseList;
+    }
+
+    public ProjectResponse getOneProjectById(Long id) throws ProjectNotFoundException {
+        Project project = verifyIfProjectExists(id);
+        return ProjectResponse.convertProjectToProjectResponse(project);
+    }
+
+    private Project verifyIfProjectExists(Long id) throws ProjectNotFoundException {
+        return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
     }
 }

@@ -3,6 +3,7 @@ package com.hourscontrol.hourscontrol.controllers;
 import com.hourscontrol.hourscontrol.dtos.request.ProjectDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.ProjectResponse;
+import com.hourscontrol.hourscontrol.exceptions.ProjectNotFoundException;
 import com.hourscontrol.hourscontrol.services.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,10 @@ public class ProjectController {
     @GetMapping
     public List<ProjectResponse> getAllProjects(){
         return projectService.getAllProjects();
+    }
+
+    @GetMapping("/{id}")
+    public ProjectResponse getOneProject(@PathVariable Long id) throws ProjectNotFoundException {
+        return projectService.getOneProjectById(id);
     }
 }
