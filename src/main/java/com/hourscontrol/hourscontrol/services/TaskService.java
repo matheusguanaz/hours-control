@@ -4,6 +4,7 @@ import com.hourscontrol.hourscontrol.dtos.request.TaskDTO;
 import com.hourscontrol.hourscontrol.dtos.response.ActivityResponse;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
 import com.hourscontrol.hourscontrol.dtos.response.TaskResponse;
+import com.hourscontrol.hourscontrol.entities.Project;
 import com.hourscontrol.hourscontrol.entities.Task;
 import com.hourscontrol.hourscontrol.exceptions.TaskNotFoundException;
 import com.hourscontrol.hourscontrol.repositories.TaskRepository;
@@ -22,9 +23,13 @@ public class TaskService {
     private TaskRepository taskRepository;
 
     public MessageResponseDTO createTask(TaskDTO taskDTO){
+        Project project = new Project();
+        project.setProjectId(taskDTO.getProjectId());
+
         Task task = new Task();
         task.setTaskDescription(taskDTO.getTaskDescription());
         task.setTaskName(taskDTO.getTaskName());
+        task.setProject(project);
 
         taskRepository.save(task);
 

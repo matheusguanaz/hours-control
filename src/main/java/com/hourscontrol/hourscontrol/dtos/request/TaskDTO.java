@@ -14,6 +14,9 @@ import javax.validation.constraints.NotEmpty;
 public class TaskDTO {
 
     @NotEmpty
+    private Long projectId;
+
+    @NotEmpty
     private String taskName;
 
     private String taskDescription;
