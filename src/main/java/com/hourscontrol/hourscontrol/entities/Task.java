@@ -26,4 +26,8 @@ public class Task {
 
     @OneToMany( mappedBy = "task",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Activity> activities;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private Project project;
 }
