@@ -12,6 +12,72 @@ E então utilizar o comando ***mvn springboot:run*** na raiz do projeto.
 
 ###Rotas
 
+#### Projects
+
+- **POST** /api/v1/project -> necessita de json na requisição com os campos *projectName* e *projectDescription*. Exemplo de requisição:
+```
+{
+    "projectName" : "Projeto controle de horas",
+    "projectDescription" : "projeto para controle de horas em determinado projeto"
+}
+```
+
+Resposta esperada:
+```
+{
+    "message": "Projeto criado com sucesso"
+}
+```
+- **GET** /api/v1/project/{id} -> retorna os dados de um projeto. Exemplo de resposta:
+```
+{
+    "projectId": 3,
+    "projectName": "Projeto controle de horas",
+    "projectDescription": "projeto para controle de horas em determinado projeto",
+    "tasks": [
+        {
+            "taskId": 4,
+            "taskName": "Iniciar projeto",
+            "taskDescription": "Iniciar projeto no start io do springboot",
+            "activities": [
+                {
+                "activityId": 4,
+                "description": "teste",
+                "startTime": "2022-01-06T18:30:59.013+00:00",
+                "endTime": "2022-01-06T18:31:10.223+00:00"
+                }
+            ]
+        }
+    ]
+}
+```
+
+
+- **GET** /api/v1/project -> retorna todos os projetos. Exemplo de resposta:
+````
+[
+    {
+    "projectId": 1,
+    "projectName": "Projeto controle de horas",
+    "projectDescription": "projeto para controle de horas em determinado projeto",
+    "tasks": [
+            {
+                "taskId": 1,
+                "taskName": "Iniciar projeto",
+                "taskDescription": "Iniciar projeto no start io do springboot",
+                "activities": [
+                    {
+                        "activityId": 1,
+                        "description": "teste",
+                        "startTime": "2022-01-06T18:30:59.013+00:00",
+                        "endTime": "2022-01-06T18:31:10.223+00:00"
+                    }
+                ]
+            }
+        ]
+    }
+]
+````
 ####Task
 
 - **POST** /api/v1/task -> necessita de json na requisição com os campos *taskName* e *taskDescription*. Exemplo de requisição:
