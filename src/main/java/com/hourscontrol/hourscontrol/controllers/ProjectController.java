@@ -2,13 +2,13 @@ package com.hourscontrol.hourscontrol.controllers;
 
 import com.hourscontrol.hourscontrol.dtos.request.ProjectDTO;
 import com.hourscontrol.hourscontrol.dtos.response.MessageResponseDTO;
+import com.hourscontrol.hourscontrol.dtos.response.ProjectResponse;
 import com.hourscontrol.hourscontrol.services.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/project")
@@ -20,5 +20,10 @@ public class ProjectController {
     @PostMapping
     public MessageResponseDTO createProject(@RequestBody ProjectDTO projectDTO){
         return projectService.createProject(projectDTO);
+    }
+
+    @GetMapping
+    public List<ProjectResponse> getAllProjects(){
+        return projectService.getAllProjects();
     }
 }

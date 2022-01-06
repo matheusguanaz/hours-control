@@ -43,13 +43,13 @@ public class TaskService {
         List<TaskResponse> tasksResponseList = new ArrayList<>();
         List<Task> tasks = taskRepository.findAll();
 
-        tasks.forEach(task -> tasksResponseList.add(convertTaskToTaskResponse(task)));
+        tasks.forEach(task -> tasksResponseList.add(TaskResponse.convertTaskToTaskResponse(task)));
         return tasksResponseList;
     }
 
     public TaskResponse getOneTask(Long id) throws TaskNotFoundException {
         Task task = verifyIfTaskExists(id);
-        return convertTaskToTaskResponse(task);
+        return TaskResponse.convertTaskToTaskResponse(task);
     }
 
     public MessageResponseDTO editTask(Long id, TaskDTO taskDTO) throws TaskNotFoundException {
@@ -70,19 +70,5 @@ public class TaskService {
 
     private Task verifyIfTaskExists(Long id) throws TaskNotFoundException {
         return taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
-    }
-
-    private TaskResponse convertTaskToTaskResponse(Task task){
-        return TaskResponse
-                .builder()
-                .id(task.getTaskId())
-                .taskName(task.getTaskName())
-                .taskDescription(task.getTaskDescription())
-                .activities(
-                        task.getActivities()
-                        .stream()
-                        .map(ActivityResponse::convertActivityToActivityResponse)
-                        .collect(Collectors.toList()))
-                .build();
     }
 }
