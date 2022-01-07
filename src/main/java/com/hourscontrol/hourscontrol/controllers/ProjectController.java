@@ -7,6 +7,7 @@ import com.hourscontrol.hourscontrol.exceptions.ProjectNotFoundException;
 import com.hourscontrol.hourscontrol.services.ProjectService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,5 +37,11 @@ public class ProjectController {
     @PutMapping("/{id}")
     public MessageResponseDTO editProject(@PathVariable Long id, @RequestBody ProjectDTO projectDTO) throws ProjectNotFoundException {
         return projectService.editProject(id, projectDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProject(@PathVariable Long id) throws ProjectNotFoundException {
+        projectService.deleteProject(id);
     }
 }

@@ -65,4 +65,8 @@ public class ProjectService {
     private Project verifyIfProjectExists(Long id) throws ProjectNotFoundException {
         return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
     }
+
+    public void deleteProject(Long id) throws ProjectNotFoundException {
+        projectRepository.delete(verifyIfProjectExists(id));
+    }
 }
