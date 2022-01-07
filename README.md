@@ -78,7 +78,25 @@ Resposta esperada:
     }
 ]
 ````
-####Task
+- **PUT** /api/v1/project -> Edita o nome ou a descrição de um projeto, necessita de json na requisição com os campos *projectName* e *projectDescription*. Exemplo de requisição:
+
+```
+{
+    "projectName" : "Projeto controle de horas",
+    "projectDescription" : "Projeto para controle de horas em projetos"
+}
+```
+
+Resposta esperada:
+
+```
+{
+    "message": "Projeto atualizado com sucesso"
+}
+```
+
+- **DELETE** /api/v1/project/{id} -> excluí um projeto  
+#### Task
 
 - **POST** /api/v1/task -> necessita de json na requisição com os campos *taskName* e *taskDescription*. Exemplo de requisição:
 
@@ -134,7 +152,7 @@ Resposta esperada:
 ```
 - **Delete** /api/v1/task/{id} -> Exclui uma tarefa.
 
-####Activities
+#### Activities
 
 - **POST** /api/v1/activity -> cria uma atividade e marca o início da atividade. Exemplo de requisição:
 ```
