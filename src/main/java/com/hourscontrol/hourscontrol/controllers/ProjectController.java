@@ -32,4 +32,9 @@ public class ProjectController {
     public ProjectResponse getOneProject(@PathVariable Long id) throws ProjectNotFoundException {
         return projectService.getOneProjectById(id);
     }
+
+    @PutMapping("/{id}")
+    public MessageResponseDTO editProject(@PathVariable Long id, @RequestBody ProjectDTO projectDTO) throws ProjectNotFoundException {
+        return projectService.editProject(id, projectDTO);
+    }
 }

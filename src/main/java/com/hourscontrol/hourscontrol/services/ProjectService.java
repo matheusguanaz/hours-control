@@ -50,6 +50,18 @@ public class ProjectService {
         return ProjectResponse.convertProjectToProjectResponse(project);
     }
 
+    public MessageResponseDTO editProject(Long id, ProjectDTO projectDTO) throws ProjectNotFoundException {
+        Project project = verifyIfProjectExists(id);
+        project.setProjectName(projectDTO.getProjectName());
+        project.setProjectDescription(projectDTO.getProjectDescription());
+
+        projectRepository.save(project);
+        return MessageResponseDTO
+                .builder()
+                .message("Projeto atualizado com sucesso")
+                .build();
+    }
+
     private Project verifyIfProjectExists(Long id) throws ProjectNotFoundException {
         return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
     }
